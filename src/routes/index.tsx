@@ -41,9 +41,9 @@ function Landing() {
             <Sparkles className="h-3.5 w-3.5" /> Diseñado para la productividad
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight max-w-4xl mx-auto leading-tight">
-            Tu día, organizado en{" "}
+            Tu día, organizado con{" "}
             <span className="bg-clip-text text-transparent" style={{ backgroundImage: "var(--gradient-primary)" }}>
-              tonos de azul
+              Aqua Tasks
             </span>
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
