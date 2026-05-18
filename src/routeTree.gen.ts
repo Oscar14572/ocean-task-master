@@ -17,6 +17,7 @@ import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated.dashboard'
 import { Route as AuthenticatedProjectsNewRouteImport } from './routes/_authenticated.projects.new'
 import { Route as AuthenticatedProjectsJoinRouteImport } from './routes/_authenticated.projects.join'
+import { Route as AuthenticatedProjectsProjectIdRouteImport } from './routes/_authenticated.projects.$projectId'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -59,6 +60,12 @@ const AuthenticatedProjectsJoinRoute =
     path: '/projects/join',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedProjectsProjectIdRoute =
+  AuthenticatedProjectsProjectIdRouteImport.update({
+    id: '/projects/$projectId',
+    path: '/projects/$projectId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
   '/projects/join': typeof AuthenticatedProjectsJoinRoute
   '/projects/new': typeof AuthenticatedProjectsNewRoute
 }
@@ -75,6 +83,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
   '/projects/join': typeof AuthenticatedProjectsJoinRoute
   '/projects/new': typeof AuthenticatedProjectsNewRoute
 }
@@ -86,6 +95,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
   '/_authenticated/projects/join': typeof AuthenticatedProjectsJoinRoute
   '/_authenticated/projects/new': typeof AuthenticatedProjectsNewRoute
 }
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/dashboard'
     | '/profile'
+    | '/projects/$projectId'
     | '/projects/join'
     | '/projects/new'
   fileRoutesByTo: FileRoutesByTo
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/dashboard'
     | '/profile'
+    | '/projects/$projectId'
     | '/projects/join'
     | '/projects/new'
   id:
@@ -116,6 +128,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_authenticated/dashboard'
     | '/_authenticated/profile'
+    | '/_authenticated/projects/$projectId'
     | '/_authenticated/projects/join'
     | '/_authenticated/projects/new'
   fileRoutesById: FileRoutesById
@@ -185,12 +198,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProjectsJoinRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/projects/$projectId': {
+      id: '/_authenticated/projects/$projectId'
+      path: '/projects/$projectId'
+      fullPath: '/projects/$projectId'
+      preLoaderRoute: typeof AuthenticatedProjectsProjectIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedProjectsProjectIdRoute: typeof AuthenticatedProjectsProjectIdRoute
   AuthenticatedProjectsJoinRoute: typeof AuthenticatedProjectsJoinRoute
   AuthenticatedProjectsNewRoute: typeof AuthenticatedProjectsNewRoute
 }
@@ -198,6 +219,7 @@ interface AuthenticatedRouteChildren {
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedProjectsProjectIdRoute: AuthenticatedProjectsProjectIdRoute,
   AuthenticatedProjectsJoinRoute: AuthenticatedProjectsJoinRoute,
   AuthenticatedProjectsNewRoute: AuthenticatedProjectsNewRoute,
 }
