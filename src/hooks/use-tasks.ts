@@ -3,42 +3,43 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Tables, TablesInsert, TablesUpdate } from "@/integrations/supabase/types";
 
 export type Task = Tables<"tasks">;
-export type TaskStatus = "pendiente" | "en progreso" | "completada";
-export type TaskPriority = "baja" | "media" | "alta";
+export type TaskStatus = "pendiente" | "en_progreso" | "en_revision" | "completada";
+export type TaskPriority = "baja" | "media" | "alta" | "critica";
 
-export function useTasks(userId: string | undefined) {
+export function useTasks(projectId: string | undefined) {
   return useQuery({
-    queryKey: ["tasks", userId],
-    enabled: !!userId,
+    queryKey: ["tasks", projectId],
+    enabled: !!projectId,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("tasks")
         .select("*")
-        .order("created_at", { ascending: false });
+        .eq("project_id", projectId!)
+        .order("start_date", { ascending: true });
       if (error) throw error;
       return data as Task[];
     },
   });
 }
 
-export function useCreateTask(userId: string | undefined) {
+export function useCreateTask(projectId: string | undefined, userId: string | undefined) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (input: Omit<TablesInsert<"tasks">, "user_id">) => {
-      if (!userId) throw new Error("No user");
+    mutationFn: async (input: Omit<TablesInsert<"tasks">, "project_id" | "created_by">) => {
+      if (!projectId || !userId) throw new Error("Missing context");
       const { data, error } = await supabase
         .from("tasks")
-        .insert({ ...input, user_id: userId })
+        .insert({ ...input, project_id: projectId, created_by: userId })
         .select()
         .single();
       if (error) throw error;
       return data as Task;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["tasks", userId] }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["tasks", projectId] }),
   });
 }
 
-export function useUpdateTask(userId: string | undefined) {
+export function useUpdateTask(projectId: string | undefined) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, ...patch }: { id: string } & TablesUpdate<"tasks">) => {
@@ -51,11 +52,11 @@ export function useUpdateTask(userId: string | undefined) {
       if (error) throw error;
       return data as Task;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["tasks", userId] }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["tasks", projectId] }),
   });
 }
 
-export function useDeleteTask(userId: string | undefined) {
+export function useDeleteTask(projectId: string | undefined) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
@@ -63,6 +64,6 @@ export function useDeleteTask(userId: string | undefined) {
       if (error) throw error;
       return id;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["tasks", userId] }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["tasks", projectId] }),
   });
 }
