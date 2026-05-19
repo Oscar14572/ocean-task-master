@@ -121,20 +121,13 @@ export function useJoinByCode(userId: string | undefined) {
   return useMutation({
     mutationFn: async (code: string) => {
       if (!userId) throw new Error("No user");
-      const { data: project, error } = await supabase
-        .from("projects")
-        .select("id, name, access_code_enabled")
-        .eq("access_code", code.trim())
-        .maybeSingle();
-      if (error) throw error;
-      if (!project || !project.access_code_enabled) {
-        throw new Error("Clave inválida o desactivada");
-      }
-      const { error: mErr } = await supabase
-        .from("project_members")
-        .insert({ project_id: project.id, user_id: userId, role: "colaborador" });
-      if (mErr && !mErr.message.includes("duplicate")) throw mErr;
-      return project;
+      const { data, error } = await supabase.rpc("join_project_by_code", {
+        _code: code.trim(),
+      });
+      if (error) throw new Error(error.message);
+      const row = Array.isArray(data) ? data[0] : data;
+      if (!row) throw new Error("Clave inválida o desactivada");
+      return row as { id: string; name: string };
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["projects"] }),
   });
