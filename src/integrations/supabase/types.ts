@@ -383,6 +383,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+            create_project_for_current_user: {
+                      Args: {
+                                  _description?: string | null
+                                  _end_date?: string
+                                  _name: string
+                                  _start_date?: string
+                                  _status?: string
+                      }
+                      Returns: Database["public"]["Tables"]["projects"]["Row"]
+            }
+      
       get_project_role: {
         Args: { _project_id: string; _user_id: string }
         Returns: string
