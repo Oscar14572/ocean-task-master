@@ -70,11 +70,13 @@ export function useCreateProject(userId: string | undefined) {
   return useMutation({
     mutationFn: async (input: Omit<TablesInsert<"projects">, "owner_id">) => {
       if (!userId) throw new Error("No user");
-      const { data, error } = await supabase
-        .from("projects")
-        .insert({ ...input, owner_id: userId })
-        .select()
-        .single();
+      const { data, error } = await supabase.rpc("create_project_for_current_user", {
+        _name: input.name,
+        _description: input.description ?? null,
+        _start_date: input.start_date,
+        _end_date: input.end_date,
+        _status: input.status ?? "planificacion",
+      });
       if (error) throw error;
       return data as Project;
     },
