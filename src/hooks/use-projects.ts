@@ -72,7 +72,7 @@ export function useCreateProject(userId: string | undefined) {
       if (!userId) throw new Error("No user");
       const { data, error } = await supabase.rpc("create_project_for_current_user", {
         _name: input.name,
-        _description: input.description ?? null,
+        _description: input.description ?? "",
         _start_date: input.start_date,
         _end_date: input.end_date,
         _status: input.status ?? "planificacion",
