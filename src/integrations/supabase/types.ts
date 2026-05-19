@@ -383,6 +383,34 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_project_for_current_user: {
+        Args: {
+          _description: string
+          _end_date: string
+          _name: string
+          _start_date: string
+          _status?: string
+        }
+        Returns: {
+          access_code: string | null
+          access_code_enabled: boolean
+          created_at: string
+          description: string | null
+          end_date: string
+          id: string
+          name: string
+          owner_id: string
+          start_date: string
+          status: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "projects"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       get_project_role: {
         Args: { _project_id: string; _user_id: string }
         Returns: string
