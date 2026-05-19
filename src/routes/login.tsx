@@ -69,7 +69,12 @@ function LoginPage() {
                 className="mt-1.5 w-full rounded-lg border border-input bg-card px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring transition" />
             </div>
             <div>
-              <label className="text-sm font-medium">Contraseña</label>
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium">Contraseña</label>
+                <Link to="/forgot-password" className="text-xs font-medium text-primary hover:underline">
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </div>
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required
                 className="mt-1.5 w-full rounded-lg border border-input bg-card px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring transition" />
             </div>
