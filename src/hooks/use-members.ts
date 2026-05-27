@@ -71,7 +71,7 @@ export function useReassignAndRemoveMember(projectId: string | undefined) {
       const { error } = await supabase.rpc("reassign_and_remove_member", {
         _project_id: projectId,
         _member_user_id: memberUserId,
-        _new_assignee_id: newAssigneeId,
+        _new_assignee_id: newAssigneeId as string, // RPC acepta null en BD aunque el tipo generado lo marque como string
       });
       if (error) throw new Error(error.message);
     },
