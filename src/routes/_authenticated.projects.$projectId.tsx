@@ -360,10 +360,19 @@ function ProjectDetailPage() {
             </CardHeader>
             <CardContent className="space-y-3 max-h-[600px] overflow-y-auto">
               {!comments?.length && <p className="text-sm text-muted-foreground">Sin avances aún.</p>}
-              {comments?.map((c) => (
-                <div key={c.id} className="border rounded-lg p-3 bg-card">
+              {comments?.map((c) => {
+                const isBloqueo = c.type === "bloqueo";
+                return (
+                <div
+                  key={c.id}
+                  className={`border rounded-lg p-3 ${isBloqueo ? "bg-destructive/10 border-destructive/40" : "bg-card"}`}
+                >
                   <div className="flex items-start justify-between text-xs text-muted-foreground mb-1">
-                    <div className="font-semibold text-foreground">{c.profile?.full_name || c.profile?.username || "Usuario"}</div>
+                    <div className="font-semibold text-foreground flex items-center gap-2">
+                      {isBloqueo && <AlertTriangle className="h-4 w-4 text-destructive" />}
+                      {c.profile?.full_name || c.profile?.username || "Usuario"}
+                      {isBloqueo && <Badge variant="destructive" className="text-[10px]">Bloqueo</Badge>}
+                    </div>
                     <div className="flex items-center gap-2">
                       <span>{new Date(c.created_at).toLocaleString()}</span>
                       {(isAdmin || c.user_id === user?.id) && (
@@ -382,7 +391,8 @@ function ProjectDetailPage() {
                     </div>
                   )}
                 </div>
-              ))}
+                );
+              })}
             </CardContent>
           </Card>
         </TabsContent>
