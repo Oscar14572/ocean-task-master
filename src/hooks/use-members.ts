@@ -36,7 +36,7 @@ export function useUpdateMemberRole(projectId: string | undefined) {
         .from("project_members")
         .update({ role })
         .eq("id", memberId);
-      if (error) throw error;
+      if (error) throw new Error(error.message);
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["members", projectId] }),
   });
@@ -47,8 +47,37 @@ export function useRemoveMember(projectId: string | undefined) {
   return useMutation({
     mutationFn: async (memberId: string) => {
       const { error } = await supabase.from("project_members").delete().eq("id", memberId);
-      if (error) throw error;
+      if (error) throw new Error(error.message);
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["members", projectId] }),
+  });
+}
+
+/**
+ * Elimina un miembro reasignando primero sus tareas activas a otro miembro
+ * (o liberándolas si no se indica responsable). Operación atómica vía RPC.
+ */
+export function useReassignAndRemoveMember(projectId: string | undefined) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      memberUserId,
+      newAssigneeId,
+    }: {
+      memberUserId: string;
+      newAssigneeId: string | null;
+    }) => {
+      if (!projectId) throw new Error("Proyecto no encontrado");
+      const { error } = await supabase.rpc("reassign_and_remove_member", {
+        _project_id: projectId,
+        _member_user_id: memberUserId,
+        _new_assignee_id: newAssigneeId as string, // RPC acepta null en BD aunque el tipo generado lo marque como string
+      });
+      if (error) throw new Error(error.message);
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["members", projectId] });
+      qc.invalidateQueries({ queryKey: ["tasks", projectId] });
+    },
   });
 }
