@@ -365,6 +365,14 @@ export type Database = {
           name: string
         }[]
       }
+      reassign_and_remove_member: {
+        Args: {
+          _member_user_id: string
+          _new_assignee_id: string
+          _project_id: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
