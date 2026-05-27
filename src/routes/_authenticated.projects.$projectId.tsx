@@ -465,6 +465,8 @@ function ProjectDetailPage() {
         members={members ?? []}
         canEdit={!!canEdit}
         isAdmin={isAdmin}
+        projectStart={project.start_date}
+        projectEnd={project.end_date}
         onSubmit={submitTask}
         onDelete={async (id) => {
           await deleteTask.mutateAsync(id);
