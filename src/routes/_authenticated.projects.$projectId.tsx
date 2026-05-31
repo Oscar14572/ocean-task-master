@@ -475,9 +475,16 @@ function ProjectDetailPage() {
         members={members ?? []}
         canEdit={!!canEdit}
         isAdmin={isAdmin}
+        projectId={projectId}
+        projectName={project.name}
         projectStart={project.start_date}
         projectEnd={project.end_date}
+        currentUserId={user?.id}
         onSubmit={submitTask}
+        onUpdateProgress={async (id, progress) => {
+          await updateTask.mutateAsync({ id, progress });
+          toast.success("Progreso actualizado");
+        }}
         onDelete={async (id) => {
           await deleteTask.mutateAsync(id);
           toast.success("Tarea eliminada");
