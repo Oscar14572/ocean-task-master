@@ -399,51 +399,14 @@ function ProjectDetailPage() {
 
         {/* IA */}
         <TabsContent value="ia" className="space-y-4">
-          <Card className="bg-gradient-to-br from-primary/5 to-accent/5">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-accent" /> Resumen diario con IA
-              </CardTitle>
-              <CardDescription>
-                La IA analiza los avances de las últimas 24 horas, tareas vencidas y progreso del proyecto.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {isAdmin ? (
-                <Button
-                  onClick={() =>
-                    generate.mutate(undefined, {
-                      onSuccess: () => toast.success("Resumen generado"),
-                      onError: (e: Error) => toast.error(e.message),
-                    })
-                  }
-                  disabled={generate.isPending}
-                >
-                  {generate.isPending ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Sparkles className="h-4 w-4 mr-2" />}
-                  Generar resumen de hoy
-                </Button>
-              ) : (
-                <p className="text-sm text-muted-foreground">Solo el administrador puede generar resúmenes.</p>
-              )}
-            </CardContent>
-          </Card>
-          <div className="space-y-3">
-            {!summaries?.length && <p className="text-sm text-muted-foreground text-center py-8">Sin resúmenes guardados.</p>}
-            {summaries?.map((s) => (
-              <Card key={s.id}>
-                <CardHeader>
-                  <CardTitle className="text-base flex items-center justify-between">
-                    <span>Resumen del {s.summary_date}</span>
-                    <Badge variant="outline" className="text-xs">{new Date(s.created_at).toLocaleString()}</Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="prose prose-sm max-w-none whitespace-pre-wrap text-sm">{s.content}</div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <AiPanel
+            projectId={projectId}
+            tasks={tasks ?? []}
+            isAdmin={!!isAdmin}
+            hasComments={!!comments?.length}
+          />
         </TabsContent>
+
 
         {/* CONFIG */}
         {isAdmin && (
