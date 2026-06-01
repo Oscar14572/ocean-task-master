@@ -56,7 +56,7 @@ function ProjectDetailPage() {
   const cancelInvite = useCancelInvitation(projectId);
   const createComment = useCreateComment(projectId, user?.id);
   const deleteComment = useDeleteComment(projectId);
-  const generate = useGenerateSummary(projectId);
+  
 
   const [taskOpen, setTaskOpen] = useState(false);
   const [editTask, setEditTask] = useState<Task | null>(null);
