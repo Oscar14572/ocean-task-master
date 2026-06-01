@@ -6,7 +6,8 @@ import { useTasks, useCreateTask, useUpdateTask, useDeleteTask, type Task } from
 import { useMembers, useUpdateMemberRole, useRemoveMember } from "@/hooks/use-members";
 import { useCreateInvitation, useProjectInvitations, useCancelInvitation } from "@/hooks/use-invitations";
 import { useProjectComments, useCreateComment, useDeleteComment } from "@/hooks/use-task-comments";
-import { useAiSummaries, useGenerateSummary } from "@/hooks/use-ai-summaries";
+import { useAiSummaries } from "@/hooks/use-ai-summaries";
+import { AiPanel } from "@/components/AiPanel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
