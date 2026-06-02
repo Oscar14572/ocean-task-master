@@ -183,8 +183,39 @@ export function AiPanel({
                 <Button variant="outline" onClick={copy}>
                   <Copy className="h-4 w-4 mr-2" /> Copiar
                 </Button>
+                <Button
+                  variant="outline"
+                  onClick={() =>
+                    sendMutation.mutate({
+                      kind,
+                      label: result.label,
+                      content: result.content,
+                      generated_at: result.generated_at,
+                    })
+                  }
+                  disabled={sendMutation.isPending}
+                >
+                  {sendMutation.isPending ? (
+                    <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Enviando…</>
+                  ) : (
+                    <><Send className="h-4 w-4 mr-2" /> Enviar a n8n</>
+                  )}
+                </Button>
               </>
             )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => sendMutation.mutate(null)}
+              disabled={sendMutation.isPending}
+              title="Envía solo los datos del proyecto (tareas por vencer e historial de reportes)"
+            >
+              {sendMutation.isPending ? (
+                <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Enviando…</>
+              ) : (
+                <><Send className="h-4 w-4 mr-2" /> Enviar datos a n8n</>
+              )}
+            </Button>
           </div>
 
           {errorMsg && (
