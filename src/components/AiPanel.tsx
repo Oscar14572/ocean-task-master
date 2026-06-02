@@ -56,6 +56,24 @@ export function AiPanel({
   const current = OPTIONS.find((o) => o.value === kind)!;
   const hasTasks = tasks.length > 0;
 
+  const sendFn = useServerFn(sendReportToN8n);
+  const sendMutation = useMutation({
+    mutationFn: (payload: { kind: string; label: string; content: string; generated_at: string } | null) =>
+      sendFn({
+        data: {
+          projectId,
+          dueInDays: 3,
+          includeReport: payload ?? undefined,
+        },
+      }),
+    onSuccess: (res) => {
+      toast.success(`Enviado a n8n (${res.tasks_count} tareas, ${res.reports_count} reportes)`);
+    },
+    onError: (e: Error) => {
+      toast.error(e.message || "No se pudo enviar a n8n");
+    },
+  });
+
   // Validaciones previas (no llamamos a la IA si faltan datos)
   const preValidate = (): string | null => {
     if (!hasTasks) return "No hay tareas en el proyecto. Crea tareas antes de generar un análisis.";
