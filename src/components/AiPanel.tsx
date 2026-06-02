@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Sparkles, Loader2, Copy, RefreshCw, AlertCircle } from "lucide-react";
+import { Sparkles, Loader2, Copy, RefreshCw, AlertCircle, Send } from "lucide-react";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
+import { useMutation } from "@tanstack/react-query";
 import { useGenerateSummary, useAiSummaries, type AiKind } from "@/hooks/use-ai-summaries";
+import { sendReportToN8n } from "@/lib/n8n.functions";
 import type { Task } from "@/hooks/use-tasks";
 
 type Option = {
