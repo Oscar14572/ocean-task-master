@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Sparkles, Loader2, Copy, RefreshCw, AlertCircle } from "lucide-react";
+import { Sparkles, Loader2, Copy, RefreshCw, AlertCircle, Send } from "lucide-react";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
+import { useMutation } from "@tanstack/react-query";
 import { useGenerateSummary, useAiSummaries, type AiKind } from "@/hooks/use-ai-summaries";
+import { sendReportToN8n } from "@/lib/n8n.functions";
 import type { Task } from "@/hooks/use-tasks";
 
 type Option = {
@@ -52,6 +55,24 @@ export function AiPanel({
 
   const current = OPTIONS.find((o) => o.value === kind)!;
   const hasTasks = tasks.length > 0;
+
+  const sendFn = useServerFn(sendReportToN8n);
+  const sendMutation = useMutation({
+    mutationFn: (payload: { kind: string; label: string; content: string; generated_at: string } | null) =>
+      sendFn({
+        data: {
+          projectId,
+          dueInDays: 3,
+          includeReport: payload ?? undefined,
+        },
+      }),
+    onSuccess: (res) => {
+      toast.success(`Enviado a n8n (${res.tasks_count} tareas, ${res.reports_count} reportes)`);
+    },
+    onError: (e: Error) => {
+      toast.error(e.message || "No se pudo enviar a n8n");
+    },
+  });
 
   // Validaciones previas (no llamamos a la IA si faltan datos)
   const preValidate = (): string | null => {
@@ -162,8 +183,39 @@ export function AiPanel({
                 <Button variant="outline" onClick={copy}>
                   <Copy className="h-4 w-4 mr-2" /> Copiar
                 </Button>
+                <Button
+                  variant="outline"
+                  onClick={() =>
+                    sendMutation.mutate({
+                      kind,
+                      label: result.label,
+                      content: result.content,
+                      generated_at: result.generated_at,
+                    })
+                  }
+                  disabled={sendMutation.isPending}
+                >
+                  {sendMutation.isPending ? (
+                    <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Enviando…</>
+                  ) : (
+                    <><Send className="h-4 w-4 mr-2" /> Enviar a n8n</>
+                  )}
+                </Button>
               </>
             )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => sendMutation.mutate(null)}
+              disabled={sendMutation.isPending}
+              title="Envía solo los datos del proyecto (tareas por vencer e historial de reportes)"
+            >
+              {sendMutation.isPending ? (
+                <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Enviando…</>
+              ) : (
+                <><Send className="h-4 w-4 mr-2" /> Enviar datos a n8n</>
+              )}
+            </Button>
           </div>
 
           {errorMsg && (
