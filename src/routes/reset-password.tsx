@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ListChecks, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/reset-password")({
-  head: () => ({ meta: [{ title: "Nueva contraseña — Aqua Tasks" }] }),
+  head: () => ({ meta: [{ title: "Nueva contraseña — Ocean Task Master" }] }),
   component: ResetPasswordPage,
 });
 
@@ -69,7 +69,7 @@ function ResetPasswordPage() {
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/15 backdrop-blur">
             <ListChecks className="h-5 w-5" />
           </div>
-          <span className="text-lg font-bold">Aqua Tasks</span>
+          <span className="text-lg font-bold">Ocean Task Master</span>
         </Link>
         <div>
           <h2 className="text-4xl font-bold leading-tight">Crea una nueva contraseña.</h2>
@@ -77,7 +77,7 @@ function ResetPasswordPage() {
             Elige una contraseña segura para proteger tu cuenta y tus proyectos.
           </p>
         </div>
-        <p className="text-xs text-white/60">© {new Date().getFullYear()} Aqua Tasks</p>
+        <p className="text-xs text-white/60">© {new Date().getFullYear()} Ocean Task Master</p>
       </div>
 
       <div className="flex items-center justify-center p-6">
