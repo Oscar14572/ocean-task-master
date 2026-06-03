@@ -4,7 +4,7 @@ import { CheckCircle2, ListChecks, Sparkles, Shield, Zap } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Aqua Tasks — Gestor de tareas en la nube" },
+      { title: "Ocean Task Master — Gestor de tareas en la nube" },
       { name: "description", content: "Organiza tus tareas con un dashboard moderno. Autenticación segura, datos por usuario y diseño profesional en azul." },
     ],
   }),
@@ -21,7 +21,7 @@ function Landing() {
             <div className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ backgroundImage: "var(--gradient-primary)" }}>
               <ListChecks className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-lg font-bold tracking-tight">Aqua Tasks</span>
+            <span className="text-lg font-bold tracking-tight">Ocean Task Master</span>
           </Link>
           <nav className="flex items-center gap-2">
             <Link to="/login" className="rounded-md px-4 py-2 text-sm font-medium text-foreground hover:bg-accent/20 transition-colors">Iniciar sesión</Link>
@@ -43,11 +43,11 @@ function Landing() {
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight max-w-4xl mx-auto leading-tight">
             Tu día, organizado con{" "}
             <span className="bg-clip-text text-transparent" style={{ backgroundImage: "var(--gradient-primary)" }}>
-              Aqua Tasks
+              Ocean Task Master
             </span>
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Aqua Tasks es un gestor de tareas profesional con autenticación, prioridades, filtros y estadísticas en tiempo real. Privado, rápido y elegante.
+            Ocean Task Master es un gestor de tareas profesional con autenticación, prioridades, filtros y estadísticas en tiempo real. Privado, rápido y elegante.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link to="/signup" className="rounded-lg px-6 py-3 text-base font-semibold text-primary-foreground transition-all hover:scale-[1.02] hover:shadow-xl" style={{ backgroundImage: "var(--gradient-primary)", boxShadow: "var(--shadow-elegant)" }}>
@@ -80,7 +80,7 @@ function Landing() {
       </section>
 
       <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Aqua Tasks
+        © {new Date().getFullYear()} Ocean Task Master
       </footer>
     </div>
   );

@@ -45,7 +45,7 @@ function AuthenticatedLayout() {
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
             <ListChecks className="h-5 w-5" />
           </div>
-          <span className="font-bold tracking-tight">Aqua Tasks</span>
+          <span className="font-bold tracking-tight">Ocean Task Master</span>
         </div>
         <nav className="flex-1 p-3 space-y-1">
           {navItems.map((item) => {
@@ -81,7 +81,7 @@ function AuthenticatedLayout() {
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
             <ListChecks className="h-4 w-4" />
           </div>
-          <span className="font-bold">Aqua Tasks</span>
+          <span className="font-bold">Ocean Task Master</span>
         </Link>
         <div className="flex items-center gap-1">
           <Link to="/profile" className="p-2 rounded-md hover:bg-sidebar-accent"><UserIcon className="h-4 w-4" /></Link>

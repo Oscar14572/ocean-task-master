@@ -53,10 +53,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Aqua Tasks — Gestor de tareas moderno" },
+      { title: "Ocean Task Master — Gestor de tareas moderno" },
       { name: "description", content: "Organiza tus tareas con un dashboard profesional. Autenticación segura y datos por usuario." },
-      { property: "og:title", content: "Aqua Tasks — Gestor de tareas moderno" },
-      { name: "twitter:title", content: "Aqua Tasks — Gestor de tareas moderno" },
+      { property: "og:title", content: "Ocean Task Master — Gestor de tareas moderno" },
+      { name: "twitter:title", content: "Ocean Task Master — Gestor de tareas moderno" },
       { property: "og:description", content: "Organiza tus tareas con un dashboard profesional. Autenticación segura y datos por usuario." },
       { name: "twitter:description", content: "Organiza tus tareas con un dashboard profesional. Autenticación segura y datos por usuario." },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/82a83844-6566-4847-b1e6-75764e24d119" },

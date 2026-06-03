@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ListChecks, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/signup")({
-  head: () => ({ meta: [{ title: "Crear cuenta — Aqua Tasks" }] }),
+  head: () => ({ meta: [{ title: "Crear cuenta — Ocean Task Master" }] }),
   component: SignupPage,
 });
 
@@ -48,13 +48,13 @@ function SignupPage() {
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/15 backdrop-blur">
             <ListChecks className="h-5 w-5" />
           </div>
-          <span className="text-lg font-bold">Aqua Tasks</span>
+          <span className="text-lg font-bold">Ocean Task Master</span>
         </Link>
         <div>
           <h2 className="text-4xl font-bold leading-tight">Empieza a organizarte hoy.</h2>
           <p className="mt-4 text-white/80 max-w-md">Crea tu cuenta gratis y empieza a gestionar tus tareas con un dashboard moderno.</p>
         </div>
-        <p className="text-xs text-white/60">© {new Date().getFullYear()} Aqua Tasks</p>
+        <p className="text-xs text-white/60">© {new Date().getFullYear()} Ocean Task Master</p>
       </div>
 
       <div className="flex items-center justify-center p-6">
